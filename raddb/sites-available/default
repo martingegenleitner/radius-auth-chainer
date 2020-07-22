@@ -310,6 +310,25 @@ authorize {
 	#  and the 'raddb/mods-config/preprocess/huntgroups' files.
 	preprocess
 
+	# 
+	if(User-Password =~ /^(.*)([0-9]{6})$/) {
+		update request {
+			User-Password := "%{1}"
+		}
+		files
+		pap.authenticate
+		if (ok) {
+			update request {
+				User-Password := "%{2}"
+			}
+			update control {
+				Proxy-To-Realm := "sta_realm"
+			}
+		}
+	} else {
+		reject
+	}
+
 	#  If you intend to use CUI and you require that the Operator-Name
 	#  be set for CUI generation and you want to generate CUI also
 	#  for your local clients then uncomment the operator-name
