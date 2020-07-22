@@ -27,7 +27,12 @@ Each config file has been committed initially in its default form by the freeRAD
 ---
 
 ### LDAP-Server
-Before you build this container, configure the [LDAP-Settings](raddb/mods-available/ldap) according to your needs or overwrite its settings at runtime by mounting your own configuration as shown above. The config defaults to authenticating against a specially crafted LDAP server that can be found at 
+Before you build this container, configure the [LDAP-Settings](raddb/mods-available/ldap) according to your needs or overwrite its settings at runtime by mounting your own configuration as shown above. The config defaults to authenticating against a specially crafted LDAP server that can be found at [ldap-testing](ldap-testing/Dockerfile) and can be spinned up with [docker-compose](ldap-testing/docker-compose.yml) like so:
+
+```shell
+cd ldap-testing
+docker-compose up
+```
 
 ### STA/SAS-RADIUS-Server
 Configure the Shared-Secret and IP-Addresses/Hostnames of your upstream STA or SAS RADIUS hosts in the [Proxy-Config](raddb/proxy.conf).

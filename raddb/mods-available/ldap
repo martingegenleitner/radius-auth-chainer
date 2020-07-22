@@ -16,7 +16,7 @@ ldap {
 	#  - ldaps:// (LDAP over SSL)
 	#  - ldapi:// (LDAP over Unix socket)
 	#  - ldapc:// (Connectionless LDAP)
-	server = 'localhost'
+	server = 'openldap'
 #	server = 'ldap.rrdns.example.org'
 #	server = 'ldap.rrdns.example.org'
 
@@ -25,8 +25,8 @@ ldap {
 
 	#  Administrator account for searching and possibly modifying.
 	#  If using SASL + KRB5 these should be commented out.
-#	identity = 'cn=admin,dc=example,dc=org'
-#	password = mypass
+	identity = 'cn=admin,dc=example,dc=org'
+	password = 'ThisPasswordIsUsedInTheLDAPConfig'
 
 	#  Unless overridden in another section, the dn from which all
 	#  searches will start from.
@@ -196,7 +196,7 @@ ldap {
 		#  For Active Directory, you should use
 		#  "samaccountname=" instead of "uid="
 		#
-		filter = "(uid=%{%{Stripped-User-Name}:-%{User-Name}})"
+		filter = "(cn=%{%{Stripped-User-Name}:-%{User-Name}})"
 
 		#  SASL parameters to use for user binds
 		#

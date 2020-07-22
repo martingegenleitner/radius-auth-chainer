@@ -1,0 +1,9 @@
+# mobpass, example.org
+dn: cn=mobpass,dc=example,dc=org
+changetype: add
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: mobpass
+description: MobilePassPlusUser
+# Password: Testing123! (generated with slappasswd)
+userPassword: {SSHA}B+r1nNnquA3jgGQI8aIqiXbg4goEOJup

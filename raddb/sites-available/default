@@ -315,8 +315,7 @@ authorize {
 		update request {
 			User-Password := "%{1}"
 		}
-		files
-		pap.authenticate
+		ldap.authenticate
 		if (ok) {
 			update request {
 				User-Password := "%{2}"
@@ -438,7 +437,7 @@ authorize {
 
 	#
 	#  The ldap module reads passwords from the LDAP database.
-	-ldap
+	ldap
 
 	#
 	#  Enforce daily limits on time spent logged in.
@@ -549,9 +548,9 @@ authenticate {
 	#  authentication server, and knows what to do with authentication.
 	#  LDAP servers do not.
 	#
-#	Auth-Type LDAP {
-#		ldap
-#	}
+	Auth-Type LDAP {
+		ldap
+	}
 
 	#
 	#  Allow EAP authentication.

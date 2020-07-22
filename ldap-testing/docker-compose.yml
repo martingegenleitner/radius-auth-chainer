@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  openldap:
+    # Documentation on this image can be found at https://github.com/osixia/docker-openldap
+    image: osixia/openldap:latest
+    # Only expose port 389 for plain ldap as it is just for testing
+    expose:
+      - 389
+    # Change the admin pw, but use the container defaults
+    # Please be aware that this password will be used by freeRadius to read LDAP-Users and their passwords.
+    # So if you change it here, you must also change it @ raddb/mods-available/ldap:29
+    environment: 
+      LDAP_ADMIN_PASSWORD: "ThisPasswordIsUsedInTheLDAPConfig"
+    volumes:
+      # By mounting this seed file, we get a preset user account to authenticate
+      # Take a look at ldap-testing/seed.ldif to adapt the seeds to your need
+      - ./seed.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/seed.ldif
+    # The command extension is required. Else your seed file will be deleted by the container
+    command: --copy-service
+
+  freeradius:
+    # Build the image with its defaults
+    build: "../."
+    # Expose the radius ports on the docker host, allowing other processes (like ntradping)
+    # to authenticate against its radius interface
+    ports: 
+      - "1812-1813:1812-1813/udp"
+    # This container can not start without a present ldap host.
+    depends_on: 
+      - openldap
+    # Since the depends_on property does not take into account that processes within a
+    # container also take some time to boot up, this container will fail a few times and
+    # will restart since the openldap takes a few seconds to accept incoming connections
+    restart: on-failure
+    command: -X
