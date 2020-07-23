@@ -311,7 +311,7 @@ authorize {
 	preprocess
 
 	# 
-	if(User-Password =~ /^(.*)([0-9]{6})$/) {
+	if(User-Password =~ /^(.*)([0-9]{6}|[p|P]{1})$/) {
 		update request {
 			User-Password := "%{1}"
 		}
