@@ -45,6 +45,8 @@ LDAP-Authentication requires a user with read permissions to the LDAP tree part 
 * `server` directive (at line 19) with your actual LDAP-server
 * `base_dn` directive (at line 33) setting the ldap tree part of the users that shall be authenticated
 * `identity` & `password` (at lines 28/29) defining the user with read permissions on the `base_dn`
+* `filter` directive (at line 199) in the `user` section to get the user according to your LDAP-schema. For example, change `cn` to `samaccountname` to use the Active Directory default.
+* `membership_attribute` directive (at line 310) to also be able to fetch groups associate with the user by adapting to your LDAP-schema. E.g. to `member` to match the Active Directory default.
 
 ### STA/SAS-RADIUS-Server
 Configure the Shared-Secret and IP-Addresses/Hostnames of your upstream STA or SAS RADIUS hosts in the [Proxy-Config](raddb/proxy.conf).
